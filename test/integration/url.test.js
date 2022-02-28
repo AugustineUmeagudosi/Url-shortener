@@ -89,4 +89,26 @@ describe('Url Module', () => {
       });
   });
 
+  // statistics
+  it('should fetch the usage statistics of a short url', (done) => {
+    chai.request(app)
+      .get(`${baseUrl}/statistics?url_path=${process.env.shortUrl}`)
+      .end((err, res) => {
+        const { message, status } = res.body;
+        expect(status).to.equal('success');
+        expect(message).to.equal(`Showing usage statistics found for ${process.env.shortUrl}`);
+        done();
+      });
+  });
+
+  it('should fail when url supplied is not found', (done) => {
+    chai.request(app)
+      .get(`${baseUrl}/statistics?url_path=${process.env.shortUrl}w`)
+      .end((err, res) => {
+        const { message, status } = res.body;
+        expect(status).to.equal('error');
+        expect(message).to.equal("Url not found.");
+        done();
+      });
+  });
 });
