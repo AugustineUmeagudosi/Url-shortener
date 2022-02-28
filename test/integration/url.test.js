@@ -65,4 +65,28 @@ describe('Url Module', () => {
       });
   });
 
+  // decode
+  it('should fetch the details of a short url', (done) => {
+    chai.request(app)
+      .get(`${baseUrl}/decode?url_path=${process.env.shortUrl}`)
+      .end((err, res) => {
+        const { message, status, data } = res.body;
+        expect(status).to.equal('success');
+        expect(message).to.equal('Url decoded successfully!');
+        expect(data).to.have.property('longUrl');
+        done();
+      });
+  });
+
+  it('should fail when url supplied is not found', (done) => {
+    chai.request(app)
+      .get(`${baseUrl}/decode?url_path=${process.env.shortUrl}w`)
+      .end((err, res) => {
+        const { message, status } = res.body;
+        expect(status).to.equal('error');
+        expect(message).to.equal("Url not found.");
+        done();
+      });
+  });
+
 });

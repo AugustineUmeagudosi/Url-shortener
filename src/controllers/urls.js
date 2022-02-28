@@ -24,3 +24,18 @@ export const createShortLink = async (req, res) => {
   const data = _.pick(newUrl, Constants.urlDetails);
   return Response.info(res, "Url shortened successfully!", 201, data);
 };
+
+/**
+ * Controller used for decoding a short url to its original long url
+ * @param {Request} req - The request from the endpoint.
+ * @param {Response} res - The response returned by the method.
+ * @returns { JSON } A JSON response containing the details of the short link
+ * @memberof UrlController
+ */
+export const decode = async (req, res) => {
+  // record this visit
+  UrlService.recordVisit(req.url._id);
+
+  const data = _.pick(req.url, Constants.urlDetails);
+  return Response.info(res, "Url decoded successfully!", 200, data);
+};
