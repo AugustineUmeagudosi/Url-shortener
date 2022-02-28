@@ -20,4 +20,11 @@ router.get(
     UrlController.decode
 );
 
+// get url statistics
+router.get( 
+    '/statistics',
+    UrlMiddleware.checkIfShortUrlExists,
+    UrlController.getUrlStatistics 
+);
+
 export default router;

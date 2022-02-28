@@ -1,4 +1,5 @@
 import { Url, UrlStatistics } from "../models";
+import { Constants } from "../utils/index";
 
 
 /**
@@ -42,4 +43,15 @@ export const recordVisit = async(urlId) => {
     });
     await urlStatistics.save();
   }
+};
+
+/**
+ * fetches short url activities
+ * @memberof UrlService
+ * @param {String} urlId - url id
+ * @returns { Promise<Object | Error> } A promise that resolves or rejects
+ * with an Array of the url resource or a DB Error.
+*/
+export const getUsageStatistics = async(urlId) => {
+  return UrlStatistics.find({urlId}).select(Constants.urlStatistics);
 };

@@ -39,3 +39,19 @@ export const decode = async (req, res) => {
   const data = _.pick(req.url, Constants.urlDetails);
   return Response.info(res, "Url decoded successfully!", 200, data);
 };
+
+/**
+ * Controller used for fetching the usage statistics of a long url
+ * @param {Request} req - The request from the endpoint.
+ * @param {Response} res - The response returned by the method.
+ * @returns { JSON } A JSON response containing the usage statistics of a given short link
+ * @memberof UrlController
+ */
+ export const getUrlStatistics = async (req, res) => {
+    const { url } = req;
+   
+    const statistics = await UrlService.getUsageStatistics(url._id);
+    if(statistics.length == 0) Response.error(res, `No usage statistics found for ${url.shortUrl}`, 404);
+
+  return Response.info(res, `Showing usage statistics found for ${url.shortUrl}`, 200, statistics);
+};

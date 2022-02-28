@@ -5,3 +5,8 @@ export const urlDetails = [
   'createdAt',
   'updatedAt'
 ];
+
+export const urlStatistics = [ 
+  'date',
+  'visitorsCount'
+];
